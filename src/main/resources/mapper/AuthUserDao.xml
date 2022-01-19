@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.AuthUserDao">
+
+    <resultMap type="com.example.demo.entity.AuthUser" id="AuthUserMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="code" column="CODE" jdbcType="VARCHAR"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
+        <result property="nickname" column="NICKNAME" jdbcType="VARCHAR"/>
+        <result property="avatar" column="AVATAR" jdbcType="VARCHAR"/>
+        <result property="sign" column="SIGN" jdbcType="VARCHAR"/>
+        <result property="phone" column="PHONE" jdbcType="VARCHAR"/>
+        <result property="email" column="EMAIL" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AuthUserMap">
+        select
+          ID, CODE, NAME, PASSWORD, NICKNAME, AVATAR, SIGN, PHONE, EMAIL, CREATED_TIME
+        from dddcz.AUTH_USER
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AuthUserMap">
+        select
+          ID, CODE, NAME, PASSWORD, NICKNAME, AVATAR, SIGN, PHONE, EMAIL, CREATED_TIME
+        from dddcz.AUTH_USER
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="AuthUserMap">
+        select
+          ID, CODE, NAME, PASSWORD, NICKNAME, AVATAR, SIGN, PHONE, EMAIL, CREATED_TIME
+        from dddcz.AUTH_USER
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="code != null and code != ''">
+                and CODE = #{code}
+            </if>
+            <if test="name != null and name != ''">
+                and NAME = #{name}
+            </if>
+            <if test="password != null and password != ''">
+                and PASSWORD = #{password}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                and NICKNAME = #{nickname}
+            </if>
+            <if test="avatar != null and avatar != ''">
+                and AVATAR = #{avatar}
+            </if>
+            <if test="sign != null and sign != ''">
+                and SIGN = #{sign}
+            </if>
+            <if test="phone != null and phone != ''">
+                and PHONE = #{phone}
+            </if>
+            <if test="email != null and email != ''">
+                and EMAIL = #{email}
+            </if>
+            <if test="createdTime != null">
+                and CREATED_TIME = #{createdTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into dddcz.AUTH_USER(CODE, NAME, PASSWORD, NICKNAME, AVATAR, SIGN, PHONE, EMAIL, CREATED_TIME)
+        values (#{code}, #{name}, #{password}, #{nickname}, #{avatar}, #{sign}, #{phone}, #{email}, #{createdTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update dddcz.AUTH_USER
+        <set>
+            <if test="code != null and code != ''">
+                CODE = #{code},
+            </if>
+            <if test="name != null and name != ''">
+                NAME = #{name},
+            </if>
+            <if test="password != null and password != ''">
+                PASSWORD = #{password},
+            </if>
+            <if test="nickname != null and nickname != ''">
+                NICKNAME = #{nickname},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                AVATAR = #{avatar},
+            </if>
+            <if test="sign != null and sign != ''">
+                SIGN = #{sign},
+            </if>
+            <if test="phone != null and phone != ''">
+                PHONE = #{phone},
+            </if>
+            <if test="email != null and email != ''">
+                EMAIL = #{email},
+            </if>
+            <if test="createdTime != null">
+                CREATED_TIME = #{createdTime},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from dddcz.AUTH_USER where ID = #{id}
+    </delete>
+
+</mapper>
