@@ -22,6 +22,7 @@ import com.example.demo.dao.AuthUserDao;
 import com.example.demo.entity.AuthUser;
 import com.example.demo.entity.GroupChat.SocketData;
 
+import com.example.demo.entity.Room;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -181,10 +182,10 @@ public class WebSocketServer {
     /**
      * 发送用户Id
      */
-    public String sendUserId(Integer userId){
+    public String sendUserId(Room room){
         try{
-            if(webSocketMap.containsKey(userId)){
-                webSocketMap.get(userId).sendMessage(userId.toString());
+            if(webSocketMap.containsKey(room.getRoomHolderId())){
+                webSocketMap.get(room.getRoomHolderId()).sendMessage(room.getRoomVisitorId().toString());
             }else {
                 return "该用户已下线";
             }

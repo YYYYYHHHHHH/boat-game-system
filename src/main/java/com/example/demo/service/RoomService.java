@@ -11,4 +11,6 @@ public interface RoomService {
     Map<String,Room> searchRoom(String roomId);
     /*加入房间*/
     String addInRoom(String roomId,Integer visitorId);
+    /*退出房间*/
+    boolean exitRoom(String roomId,Integer userId);
 }
