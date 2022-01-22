@@ -19,8 +19,6 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ServerEndpoint("/imserver/room/{userId}")
@@ -102,28 +100,30 @@ public class RoomWebSocketServer{
      * 发送用户Id
      */
     public boolean sendUserId(Room room){
-        try{
-            if(webSocketMap.containsKey(room.getRoomHolderId())){
-                webSocketMap.get(room.getRoomHolderId()).sendMessage(room.getRoomVisitorId().toString());
+            if(webSocketMap.containsKey(room.getRoomHolderId().toString())){
+                String holderId = room.getRoomHolderId().toString();
+                String visitorId = room.getRoomVisitorId().toString();
+                webSocketMap.get(holderId).sendMessage(visitorId);
             }else {
                 return false;
             }
-        }catch(IOException e){
-            return false;
-        }
-        return true;
+            return true;
     }
 
-    public void sendUserId(String msg,Integer msgTo) throws IOException{
-        if(webSocketMap.containsKey(msgTo)){
-            webSocketMap.get(msgTo).sendMessage(msg);
-        }
+    public void sendUserId(String msg,Integer msgTo) throws IOException {
+            if (webSocketMap.containsKey(msgTo)) {
+                webSocketMap.get(msgTo).sendMessage(msg);
+            }
     }
     /**
      * 实现服务器主动推送
      */
-    public void sendMessage(String message) throws IOException {
-        this.session.getBasicRemote().sendText(message);
+    public void sendMessage(String message) {
+        try {
+            this.session.getBasicRemote().sendText(message);
+        }catch (IOException e){
+
+        }
     }
 
     public static synchronized void addOnlineCount() {
