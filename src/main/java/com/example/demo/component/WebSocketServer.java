@@ -178,6 +178,22 @@ public class WebSocketServer {
         return list;
     }
 
+    /**
+     * 发送用户Id
+     */
+    public String sendUserId(Integer userId){
+        try{
+            if(webSocketMap.containsKey(userId)){
+                webSocketMap.get(userId).sendMessage(userId.toString());
+            }else {
+                return "该用户已下线";
+            }
+        }catch(IOException e){
+            return "该用户已下线";
+        }
+        return "加入成功";
+    }
+
     public static ConcurrentHashMap<String, WebSocketServer> getWebSocketMap() {
         return webSocketMap;
     }

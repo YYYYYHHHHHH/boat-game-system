@@ -25,16 +25,19 @@ public class GroupChatController {
     @Autowired
     private GroupChatServiceImpl groupChatServiceImpl;
 
+    /*获取用户列表*/
     @GetMapping("/users")
     List<ChatUserInfo> getChatUsers() {
         return groupChatServiceImpl.getChatUsers();
     }
 
+    /*获取历史数据*/
     @GetMapping("/his")
     List<Chat> getChatByLimit(@RequestParam("start") int start, @RequestParam("num") int num) {
         return groupChatServiceImpl.getChatByLimit(start, num);
     }
-    
+
+    /*服务端发送信息*/
     @PostMapping(value = "/send")
     void sendChat(@RequestBody SendChat sendChat) {
         log.info(sendChat.toString());

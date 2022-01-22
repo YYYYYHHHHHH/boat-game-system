@@ -2,6 +2,8 @@ package com.example.demo.dao;
 
 import com.example.demo.entity.AuthUser;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,7 @@ import java.util.List;
  * @author makejava
  * @since 2021-10-15 11:21:03
  */
+@Component(value = "AuthUserDao")
 public interface AuthUserDao {
 
     /**
